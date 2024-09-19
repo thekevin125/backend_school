@@ -1,25 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
-import { User } from '../users/shemas/users.shema';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
   ) {}
 
-  async signIn(username: string, pass: string): Promise<{ access_token: string }> {
-    const user = await this.usersService.findOne(username);
-    if (!user || user.password !== pass) {
-      throw new Error('Invalid credentials');
+  async signIn(email: string, pass: string): Promise<{ access_token: string }> {
+    // Busca al usuario por email
+    const user = await this.usersService.findOneByEmail(email);
+
+    // Verifica si el usuario existe y si la contraseña es válida
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
     }
-    const payload = { sub: user._id.toString(), username: user.username };
+
+    const passwordMatches = await bcrypt.compare(pass, user.password);
+
+    if (!passwordMatches) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    // Crea el payload del JWT
+    const payload = { sub: user._id.toString(), username: user.name };
+
+    // Genera y devuelve el token de acceso
     return {
       access_token: this.jwtService.sign(payload),
     };
   }
 }
-
-

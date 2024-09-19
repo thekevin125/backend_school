@@ -1,18 +1,29 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Role } from '../../enums/roles.enum'; // Ajusta la ruta si es necesario
 
 export type UserDocument = User & Document;
 
 @Schema()
 export class User {
   @Prop({ required: true })
-  username: string;
+  name: string;
+
+  @Prop({ required: true, unique: true })
+  email: string;
 
   @Prop({ required: true })
   password: string;
 
-  // Asegúrate de que el campo _id esté disponible
-  _id: string; // Mongoose lo maneja automáticamente, pero puedes añadir esta línea para evitar errores de TypeScript
+  @Prop({ required: true, enum: Role })
+  role: Role;
+
+  @Prop() // Solo para estudiantes
+  grade?: string;
+
+  // Agrega un ID si no está presente
+  _id?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+

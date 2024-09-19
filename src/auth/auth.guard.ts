@@ -7,7 +7,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
+import { jwtConstants } from './constants'; // Asegúrate de que la ruta sea correcta
 import { Request } from 'express';
 
 @Injectable()
@@ -17,17 +17,21 @@ export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
+
     if (!token) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Token is missing'); // Mensaje más específico
     }
+
     try {
       const payload = await this.jwtService.verifyAsync(token, {
-        secret: jwtConstants.secret,
+        secret: jwtConstants.secret, // Usa el secreto desde jwtConstants
       });
       request['user'] = payload;
-    } catch {
-      throw new UnauthorizedException();
+    } catch (error) {
+      console.error('JWT verification failed:', error); // Registro de errores
+      throw new UnauthorizedException('Invalid token');
     }
+
     return true;
   }
 
@@ -36,4 +40,3 @@ export class AuthGuard implements CanActivate {
     return type === 'Bearer' ? token : undefined;
   }
 }
-
