@@ -1,18 +1,22 @@
-import { Controller, Get, UseGuards, Request } from '@nestjs/common';
-import { Roles } from '../common/decorators/roles.decorator';
-import { Role } from '../enums/roles.enum';
-import { RoleGuard } from '../common/guards/roles.guard';
-import { AuthGuard } from '../auth/auth.guard';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { StudentsService } from './estudiante.service';
+import { RegisterStudentDto } from './dto/estudiante.dto';
 
-@Controller('estudiante')
-@UseGuards(AuthGuard, RoleGuard)
-export class EstudianteController {
-  
-  @Get('ver-notas')
-  @Roles(Role.Estudiante)
-  async verNotas(@Request() req) {
-    const user = req.user; // Esto asume que el usuario está autenticado y puedes obtener su información
-    // Aquí va la lógica para que el estudiante vea sus notas
-    return { notas: 'Estas son tus notas', user };
+@Controller('students')
+export class StudentsController {
+  constructor(private readonly studentsService: StudentsService) {}
+
+  // Endpoint para registrar un nuevo estudiante
+  @Post('register')
+  async register(@Body() registerStudentDto: RegisterStudentDto) {
+    const student = await this.studentsService.registerStudent(registerStudentDto);
+    return { message: 'Estudiante registrado exitosamente', student };
+  }
+
+  // Endpoint para obtener estudiantes por grado
+  @Get('by-grade/:grade')
+  async getStudentsByGrade(@Param('grade') grade: string) {
+    const students = await this.studentsService.findStudentsByGrade(grade);
+    return students;
   }
 }
