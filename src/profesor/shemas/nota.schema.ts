@@ -1,20 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema()
-export class Nota extends Document {
+@Schema({ timestamps: true })
+export class Teacher extends Document {
   @Prop({ required: true })
-  studentId: string; // ID del estudiante
+  name: string;
+
+  @Prop({ required: true, unique: true })
+  email: string;
 
   @Prop({ required: true })
-  grade: string; // Grado del estudiante
+  password: string; // Para el inicio de sesión
 
   @Prop({ required: true })
-  subject: string; // Asignatura
-
-  @Prop({ required: true })
-  score: number; // Calificación
+  subject: string; // Materia que enseña
 }
 
-export const NotaSchema = SchemaFactory.createForClass(Nota);
-export type NotaDocument = Nota & Document; // Asegúrate de exportar NotaDocument
+export const TeacherSchema = SchemaFactory.createForClass(Teacher);

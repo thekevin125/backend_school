@@ -14,7 +14,5 @@ export class CreateUserDto {
   @IsString()
   role: Role;
 
-  @IsOptional()
-  @IsString()
-  grade?: string;
+
 }

@@ -1,22 +1,34 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { StudentsService } from './estudiante.service';
-import { RegisterStudentDto } from './dto/estudiante.dto';
+import { CreateStudentDto } from './dto/estudiante.dto';
+import { UpdateStudentDto } from './dto/UpdateStudentDto';
 
 @Controller('students')
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
 
-  // Endpoint para registrar un nuevo estudiante
-  @Post('register')
-  async register(@Body() registerStudentDto: RegisterStudentDto) {
-    const student = await this.studentsService.registerStudent(registerStudentDto);
-    return { message: 'Estudiante registrado exitosamente', student };
+  @Post()
+  create(@Body() createStudentDto: CreateStudentDto) {
+    return this.studentsService.create(createStudentDto);
   }
 
-  // Endpoint para obtener estudiantes por grado
-  @Get('by-grade/:grade')
-  async getStudentsByGrade(@Param('grade') grade: string) {
-    const students = await this.studentsService.findStudentsByGrade(grade);
-    return students;
+  @Get()
+  findAll() {
+    return this.studentsService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.studentsService.findOne(id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
+    return this.studentsService.update(id, updateStudentDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.studentsService.remove(id);
   }
 }

@@ -18,8 +18,7 @@ export class User {
   @Prop({ required: true, enum: Role })
   role: Role;
 
-  @Prop() // Solo para estudiantes
-  grade?: string;
+
 
   // Agrega un ID si no está presente
   _id?: string;

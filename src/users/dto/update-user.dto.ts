@@ -13,7 +13,5 @@ export class UpdateUserDto {
   @IsString()
   role?: Role;
 
-  @IsOptional()
-  @IsString()
-  grade?: string;
+
 }

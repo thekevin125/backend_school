@@ -1,15 +1,13 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
-export class AgregarNotaDto {
-  @IsString()
-  studentId: string; // ID del estudiante
+export class CreateTeacherDto {
+  @IsNotEmpty()
+  name: string;
 
-  @IsString()
-  grade: string; // Grado del estudiante
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
 
-  @IsString()
-  subject: string; // Asignatura
-
-  @IsNumber()
-  score: number; // Calificación
+  @IsNotEmpty()
+  password: string; // Añadir contraseña
 }

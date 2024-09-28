@@ -4,8 +4,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { ProfesorModule } from './profesor/profesor.module';
+import { TeachersModule } from './profesor/profesor.module'; // Asegúrate de que el nombre sea correcto
 import { StudentsModule } from './estudiante/estudiante.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -16,7 +17,7 @@ import { StudentsModule } from './estudiante/estudiante.module';
     }),
     AuthModule,
     UsersModule,
-    ProfesorModule,
+    TeachersModule,
     StudentsModule,
   ],
   controllers: [],
