@@ -20,13 +20,12 @@ export class AuthService {
     }
 
     const passwordMatches = await bcrypt.compare(pass, user.password);
-
     if (!passwordMatches) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    // Crea el payload del JWT
-    const payload = { sub: user._id.toString(), username: user.name };
+    // Crea el payload del JWT, incluyendo el rol
+    const payload = { sub: user._id.toString(), username: user.name, role: user.role };
 
     // Genera y devuelve el token de acceso
     return {
