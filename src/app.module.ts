@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TeachersModule } from './profesor/profesor.module'; // Asegúrate de que el nombre sea correcto
 import { StudentsModule } from './estudiante/estudiante.module';
+import { NotesModule } from './notes/notes.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { StudentsModule } from './estudiante/estudiante.module';
     UsersModule,
     TeachersModule,
     StudentsModule,
+    NotesModule,
   ],
   controllers: [],
   providers: [],

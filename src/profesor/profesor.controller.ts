@@ -2,13 +2,12 @@ import { Controller, Post, Body, Get, Param, Patch, Delete, UseGuards } from '@n
 import { TeachersService } from './profesor.service';
 import { CreateTeacherDto } from './dto/agregar-nota.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
-import { AuthGuard } from '../auth/auth.guard'; // Asegúrate de importar AuthGuard
 import { RoleGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '../enums/roles.enum';
 
 @Controller('teachers')
-@UseGuards(AuthGuard, RoleGuard) // Aplicar AuthGuard y RoleGuard
+@UseGuards(RoleGuard) // Aplicar el guard para todas las rutas del controlador
 export class TeachersController {
   constructor(private readonly teachersService: TeachersService) {}
 
