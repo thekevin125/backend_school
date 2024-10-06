@@ -1,13 +1,18 @@
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateTeacherDto {
   @IsNotEmpty()
-  name: string;
+  nombre: string;
 
-  @IsEmail()
   @IsNotEmpty()
   email: string;
 
   @IsNotEmpty()
-  password: string; // Añadir contraseña
+  materia: string; // Materia que enseña el profesor
+
+  @IsNotEmpty()
+  titulos: string; // Títulos académicos del profesor
+
+  @IsNotEmpty()
+  password: string; // Contraseña del profesor
 }
