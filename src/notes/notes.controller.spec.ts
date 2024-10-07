@@ -1,18 +1,35 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { NotesController } from './notes.controller';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { CreateNoteDto } from './dto/create-note.dto';
+import { UpdateNoteDto } from './dto/update-note.dto';
+import { NotesService } from './notes.service';
+import { Nota } from './shema/nota.schema';
 
-describe('NotesController', () => {
-  let controller: NotesController;
+@Controller('notes')
+export class NotesController {
+  constructor(private readonly notesService: NotesService) {}
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [NotesController],
-    }).compile();
+  @Post()
+  create(@Body() createNoteDto: CreateNoteDto): Promise<Nota> {
+    return this.notesService.create(createNoteDto);
+  }
 
-    controller = module.get<NotesController>(NotesController);
-  });
+  @Get()
+  findAll(): Promise<Nota[]> {
+    return this.notesService.findAll();
+  }
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
-});
+  @Get(':id')
+  findOne(@Param('id') id: string): Promise<Nota> {
+    return this.notesService.findOne(id);
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateNoteDto: UpdateNoteDto): Promise<Nota> {
+    return this.notesService.update(id, updateNoteDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string): Promise<any> {
+    return this.notesService.remove(id);
+  }
+}

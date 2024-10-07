@@ -1,18 +1,19 @@
-import { IsNotEmpty, IsString, IsMongoId } from 'class-validator';
+import { IsNotEmpty, IsMongoId, IsNumber, IsString } from 'class-validator';
 
 export class CreateNoteDto {
   @IsNotEmpty()
   @IsMongoId()
-  estudianteId: string; // El ID del estudiante
+  estudiante: string;
 
   @IsNotEmpty()
   @IsString()
-  materia: string; // Materia en la que se evalúa al estudiante
+  materia: string;
 
   @IsNotEmpty()
   @IsString()
-  nota: string; // Nota obtenida por el estudiante
+  observacion: string;
 
-  @IsString()
-  observacion: string; // Observación sobre el rendimiento del estudiante
+  @IsNotEmpty()
+  @IsNumber()
+  nota: number;
 }
