@@ -5,9 +5,11 @@ import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { RoleGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '../enums/roles.enum';
+import { AuthGuard } from '../auth/auth.guard'; // Importa tu guard de autenticación JWT
+
 
 @Controller('teachers')
-@UseGuards(RoleGuard) // Aplicar el guard para todas las rutas del controlador
+@UseGuards(AuthGuard, RoleGuard) // Aplicar el guard para todas las rutas del controlador
 export class TeachersController {
   constructor(private readonly teachersService: TeachersService) {}
 

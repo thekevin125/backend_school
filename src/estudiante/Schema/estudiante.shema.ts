@@ -10,7 +10,14 @@ export class Student extends Document {
   email: string;
 
   @Prop({ required: true })
-  grade: string;
+  grado: string;
+  
+  @Prop({ required: true })
+telefono: string;
+
+@Prop({ required: true })
+direccion: string;
+
 
   @Prop({ type: [{ materia: String, nota: Number, observacion: String }], default: [] })
   notas: {

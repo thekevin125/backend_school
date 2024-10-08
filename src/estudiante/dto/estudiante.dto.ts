@@ -11,8 +11,14 @@ export class CreateStudentDto {
 
   @IsString()
   @IsNotEmpty()
-  grade: string;
+  grado: string;
+
 
   @IsString()
-  parentId: string;
+  @IsNotEmpty()
+  telefono: string;
+
+  @IsString()
+  @IsNotEmpty()
+  direccion: string;
 }
