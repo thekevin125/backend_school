@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { TeachersModule } from './profesor/profesor.module'; // Asegúrate de que el nombre sea correcto
 import { StudentsModule } from './estudiante/estudiante.module';
 import { NotesModule } from './notes/notes.module';
+import { ImagesModule } from './images/images.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { NotesModule } from './notes/notes.module';
     TeachersModule,
     StudentsModule,
     NotesModule,
+    ImagesModule,
   ],
   controllers: [],
   providers: [],
