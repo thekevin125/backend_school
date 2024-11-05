@@ -17,14 +17,12 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('xxx', app, document);
 
-  // Valida que PORT esté definido en las variables de entorno
-  const port = process.env.PORT;
-  if (!port) {
-    throw new Error('La variable de entorno PORT no está definida');
-  }
+  // Define el puerto con un valor por defecto de 4000
+  const port = process.env.PORT || 4000;
 
-  // Inicia la aplicación en el puerto definido en las variables de entorno
+  // Inicia la aplicación en el puerto definido
   await app.listen(port);
+  console.log(`Aplicación ejecutándose en el puerto ${port}`);
 }
 
 bootstrap();
