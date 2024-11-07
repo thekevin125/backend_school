@@ -17,7 +17,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('xxx', app, document);
 
-  // Define el puerto con un valor por defecto de 4000
+  // Define el puerto desde la variable de entorno PORT de Render o usa 4000 como predeterminado
   const port = process.env.PORT || 4000;
 
   // Inicia la aplicación en el puerto definido
