@@ -8,6 +8,7 @@ import { TeachersModule } from './profesor/profesor.module'; // Asegúrate de qu
 import { StudentsModule } from './estudiante/estudiante.module';
 import { NotesModule } from './notes/notes.module';
 import { ImagesModule } from './images/images.module';
+import { MenuModule } from './menu/menu.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ImagesModule } from './images/images.module';
     StudentsModule,
     NotesModule,
     ImagesModule,
+    MenuModule,
   ],
   controllers: [],
   providers: [],
