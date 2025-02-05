@@ -1,6 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Student } from './Schema/estudiante.shema';
 import { CreateStudentDto } from './dto/estudiante.dto';
 import { UpdateStudentDto } from './dto/UpdateStudentDto';
@@ -19,7 +19,10 @@ export class StudentsService {
   }
 
   async findOne(id: string): Promise<Student> {
-    const student = await this.studentModel.findById(id).exec();
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException(`Invalid ID format: ${id}`);
+    }
+    const student = await this.studentModel.findById(new Types.ObjectId(id)).exec();
     if (!student) {
       throw new NotFoundException(`Student with ID "${id}" not found`);
     }
@@ -27,7 +30,14 @@ export class StudentsService {
   }
 
   async update(id: string, updateStudentDto: UpdateStudentDto): Promise<Student> {
-    const updatedStudent = await this.studentModel.findByIdAndUpdate(id, updateStudentDto, { new: true }).exec();
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException(`Invalid ID format: ${id}`);
+    }
+    const updatedStudent = await this.studentModel.findByIdAndUpdate(
+      new Types.ObjectId(id),
+      updateStudentDto,
+      { new: true },
+    ).exec();
     if (!updatedStudent) {
       throw new NotFoundException(`Student with ID "${id}" not found`);
     }
@@ -35,7 +45,10 @@ export class StudentsService {
   }
 
   async remove(id: string): Promise<Student> {
-    const deletedStudent = await this.studentModel.findByIdAndDelete(id).exec();
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException(`Invalid ID format: ${id}`);
+    }
+    const deletedStudent = await this.studentModel.findByIdAndDelete(new Types.ObjectId(id)).exec();
     if (!deletedStudent) {
       throw new NotFoundException(`Student with ID "${id}" not found`);
     }
