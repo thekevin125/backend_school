@@ -25,7 +25,7 @@ export class TeachersController {
   }
 
   @Get()
-  @Roles(Role.Profesor) // Solo el rol de profesor puede acceder
+  @Roles(Role.Estudiante) 
   @ApiOperation({ summary: 'Obtener todos los profesores' }) // Descripción del endpoint
   @ApiResponse({ status: 200, description: 'Lista de profesores', type: [CreateTeacherDto] })
   findAll() {
